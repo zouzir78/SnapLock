@@ -23,6 +23,11 @@ jobs:
       - name: Extract project
         run: unzip SnapLockAndroid_source.zip -d project
 
+      - name: Fix Java and Kotlin targets
+        working-directory: project/SnapLockAndroid
+        run: |
+          find . -name "*.gradle" -o -name "*.gradle.kts" | xargs sed -i 's/JVM_1_8/JVM_17/g; s/JavaVersion.VERSION_1_8/JavaVersion.VERSION_17/g; s/JavaVersion.VERSION_1_8/JavaVersion.VERSION_17/g'
+
       - name: Build APK
         working-directory: project/SnapLockAndroid
         run: gradle assembleDebug
